@@ -23,6 +23,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/font-roboto-local/roboto.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="serial-data.html">
 <link rel="import" href="my-progress.html">
 <link rel="import" href="my-icons.html">
@@ -31,7 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="my-app">
   <template>
-    <style>
+    <style include="iron-flex">
        :host {
         --app-primary-color: #4285f4;
         --app-secondary-color: black;
@@ -76,24 +78,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-bottom: 10px;
         width: 70%;
       }
+
+      .detailedinfo {
+        font-size: 0.6em;
+        margin: 4px;
+      }
+      .iron-selected {
+        background: #eeeeee;
+      }
     </style>
 
     <app-location use-hash-as-path route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern="instructions/:page/:product" data="{{routeData}}"
       tail="{{subroute}}"></app-route>
-    <iron-ajax id="instruction" url="/app/instructions/instructions-[[routeData.page]].json"
+    <iron-ajax id="instruction" url="/instructions/instructions-[[routeData.page]].json"
       handle-as="json" on-response="getInstructions" on-error="handleError"></iron-ajax>
     <iron-ajax id="sendCommand" url="/nordic" method="POST" content-type="application/json"></iron-ajax>
 
-    <app-drawer-layout fullbleed>
+    <app-drawer-layout>
       <!-- Drawer content -->
       <app-drawer id="drawer">
-        <app-toolbar>Menu</app-toolbar>
-        <iron-selector selected="[[page]]" class="drawer-list" role="navigation">
-          <template is="dom-repeat" items="[[all_products]]">
-            <a href="#instructions/[[routeData.page]]/[[index]]">[[item.title]]</a>
-          </template>
-        </iron-selector>
+        <div class="layout vertical" style="height:100%">
+          <div class="logo">
+            <img src="../images/logo/hunterdouglas.png">
+          </div>
+          <div class="flex" id="instrs">
+            <iron-selector selected="[[routeData.product]]" class="drawer-list" role="navigation">
+              <template is="dom-repeat" items="[[all_products]]">
+                <a href="#instructions/[[routeData.page]]/[[index]]">[[item.title]]</a>
+              </template>
+            </iron-selector>
+          </div>
+
+          <div class="detailedinfo">
+            <serial-data></serial-data>
+            <div> instruction version: <span>[[definitions_version]]</span> </div>
+          </div>
+        </div>
       </app-drawer>
 
       <!-- Main content -->
@@ -178,6 +199,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       _routeProductChanged1: function (newValue) {
         this.$.instruction.generateRequest();
+        var _as = this.$.instrs.querySelectorAll("a")
+        for (var i=0;i<_as.length;i+=1){
+          _as[i].blur();
+        }
+        //document.body.focus();
         //this.set_current_step(this.routeData.product);
       },
 

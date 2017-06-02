@@ -50,6 +50,14 @@
             min-height: 100vh;
             margin-top: var(--container-margin-top);
         }
+        .fakebutton{
+            padding:10px;
+            border: 1px solid darkgray;
+            min-width:60px;
+            text-align: center;
+            background: transparent;
+            cursor: pointer;
+        }
     </style>
     <style include="iron-flex iron-flex-alignment"></style>
     <template>
@@ -60,7 +68,6 @@
                 </marked-element>
                 <div class="flex vertical layout" id="uicells">
                     <!--<template is="dom-repeat" items="[[instructions]]">-->
-
                     <div class="horizontal layout start rule">
                         <ui-cell id="col1" data="[[row1.col1]]"></ui-cell>
                         <ui-cell id="col2" data="[[row1.col2]]"></ui-cell>
@@ -84,13 +91,13 @@
                 </div>
                 <div class="horizontal layout justified">
                     <div>
-                        <div on-tap="_prev">[[data.previous.caption]]</div>
+                        <div class="fakebutton" on-tap="_prev">[[data.previous.caption]]</div>
                         <!--<paper-button noink class="instruction" raised on-tap="_prev" hidden="[[previous_hidden]]">
                             [[data.previous.caption]]
                         </paper-button>-->
                     </div>
                     <div>
-                        <div on-tap="_next">[[data.next.caption]]</div>
+                        <div class="fakebutton" on-tap="_next">[[data.next.caption]]</div>
                         <!--<paper-button noink class="instruction" raised on-tap="_next">
                             [[data.next.caption]]
                         </paper-button>-->
