@@ -77,6 +77,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-top: 10px;
         margin-bottom: 10px;
         width: 70%;
+        max-width: 250px;
       }
 
       .detailedinfo {
@@ -89,7 +90,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       #title {
-        font-size: 3em;
+        font-size: 2em;
         font-weight: bold;
         margin-left: 2em;
       }
@@ -100,9 +101,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
       #menu {
-        background-color: #4285f4;
-        color: #fff;
+        background-color: #e0e0e0;
+        /*color: #fff;*/
         width: 100%;
+      }
+
+      #instrs {
+        overflow-y: auto;
       }
     </style>
 
@@ -119,9 +124,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div id="menu" class="layout horizontal justified">
         <paper-button noink on-tap="toggleDrawer" style="height:100%;" class="self-start">
           <iron-icon icon="menu"></iron-icon>Select product</paper-button>
-        <div id="title" class="flex">[[currentproduct.title]]</div>
+        <div id="title" class="flex">[[currentproduct.title.content]]</div>
         <div class="detailedinfo">
-          <serial-data></serial-data>
+          <serial-data serialconnection="[[serialconnection]]"></serial-data>
         </div>
       </div>
 
@@ -140,7 +145,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="flex" id="instrs">
           <iron-selector selected="[[routeData.product]]" class="drawer-list" role="navigation">
             <template is="dom-repeat" items="[[all_products]]">
-              <a on-tap="toggleDrawer" href="#instructions/[[routeData.page]]/[[index]]">[[item.title]]</a>
+              <a on-tap="toggleDrawer" href="#instructions/[[routeData.page]]/[[index]]">[[item.title.content]]</a>
             </template>
           </iron-selector>
         </div>
@@ -160,7 +165,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </app-header>-->
 
 
-    <!--</app-drawer-layout>-->
+    <!--MAIN CONTENT-->
     <my-modal modaldata="[[modaldata]]" id="modl"></my-modal>
   </template>
 
@@ -170,6 +175,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       properties: {
         currentproduct: {
           type: Object
+        },
+        serialconnection:{
+          type:Boolean,
+          value:true
         },
         modaldata: {
           type: Object
