@@ -27,6 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<!--<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">-->
 <link rel="import" href="serial-data.html">
 <link rel="import" href="my-progress.html">
 <link rel="import" href="my-icons.html">
@@ -127,6 +128,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div id="title" class="flex">[[currentproduct.title.content]]</div>
         <div class="detailedinfo">
           <serial-data serialconnection="[[serialconnection]]"></serial-data>
+          <!--<paper-checkbox checked="{{serialconnection}}">serial enabled.</paper-checkbox>-->
         </div>
       </div>
 
@@ -177,8 +179,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Object
         },
         serialconnection:{
-          type:Boolean,
-          value:true
+          type:Number,
+          value:1
         },
         modaldata: {
           type: Object

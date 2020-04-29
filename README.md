@@ -1,1 +1,3 @@
 # Nordic frontend.
+
+```polymer build```
